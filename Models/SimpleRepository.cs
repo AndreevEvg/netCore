@@ -2,9 +2,9 @@ using System.Collections.Generic;
 
 namespace Razor.Models;
 
-public class SimpleRepository
+public class SimpleRepository : IRepository
 {
-    private Dictionary<string, Product> products = new Dictionary<string, Product>();
+    private readonly Dictionary<string, Product> _products = new Dictionary<string, Product>();
 
     public static SimpleRepository SharedRepository { get; } = new SimpleRepository();
 
@@ -22,9 +22,10 @@ public class SimpleRepository
         {
             AddProduct(p);
         }
+        _products.Add("Error", null!);
     }
 
-    public IEnumerable<Product> Products => products.Values;
+    public IEnumerable<Product> Products => _products.Values;
 
-    public void AddProduct(Product p) => products.Add(p.Name, p);
+    public void AddProduct(Product p) => _products.Add(p.Name, p);
 }
